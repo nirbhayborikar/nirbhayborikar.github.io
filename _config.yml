@@ -1,79 +1,32 @@
-### Site Settings ###
-title               : portfolYOU
-description         : >-
-                      I turn coffee :coffee: into code,
-                      use tabs over spaces
-                      and never broke production.
-baseurl             : ""            # Empty because repo is username.github.io
-repository          : nirbhayborikar/nirbhayborikar.github.io
-remote_theme        : Nirbhay_Borikar/Robotics_Engineer
-open_new_tab        : false
-
-### Plugins ###
+title: portfolYOU
+description: >-
+  I turn coffee :coffee: into code,
+  use tabs over spaces,
+  and never break production.
+baseurl: ""             # Empty because user site (username.github.io)
+remote_theme: yousinix/portfolYOU
 plugins:
   - jemoji
 
-### Navbar Settings ###
-nav_exclude:
-  - pages/tags.html
-  - pages/404.html
-  - pages/index.md
-
-### Author Info ###
 author:
-  name              : Nirbhay_Borikar
-  image             : /assets/images/profile.jpg   # Local image in assets/images/
-  behance           : nirbhayborikar
-  email             : nirbhayborikar@gmail.com
-  facebook          : nirbhayborikar
-  github            : nirbhayborikar
-  gitlab            : nb-246830
-  linkedin          : nirbhayborikar
+  name: Nirbhay Borikar
+  image: https://i.imgur.com/uyDNQnn.jpg
+  email: nirbhayborikar@gmail.com
+  github: nirbhayborikar
+  linkedin: nirbhayborikar
+  facebook: nirbhayborikar
+  behance: nirbhayborikar
 
-### Posts ###
-permalink: /blog/:title
-
-### Collections ###
 collections:
   projects:
     output: true
     permalink: /projects/:name
 
-### Disqus ###
-disqus:
-  shortname: ""
+permalink: /blog/:title
 
-### Analytics ###
-analytics:
-  enabled: false
-  google:
-    tracking_id: ""
-
-### Buy me a coffee ###
-buymeacoffee:
-  enabled: false
-  username: ""
-  color: "#007bff"
-  message: "Thank you for visiting."
-  description: "Support me on Buy me a coffee!"
-
-### Defaults for collections ###
-defaults:
-  - scope:
-      path: ""
-      type: "projects"
-    values:
-      layout: "page"
-  - scope:
-      path: ""
-      type: "posts"
-    values:
-      comments: false
-
-### Exclude from processing ###
 exclude:
   - README.md
-  - CONTRIBUTING.md
   - LICENSE
+  - CONTRIBUTING.md
   - "*.log"
 
