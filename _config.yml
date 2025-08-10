@@ -1,0 +1,79 @@
+### Site Settings ###
+title               : portfolYOU
+description         : >-
+                      I turn coffee :coffee: into code,
+                      use tabs over spaces
+                      and never broke production.
+baseurl             : ""            # Leave empty for <username>.github.io
+repository          : nirbhayborikar/nirbhay_borikar.github.io
+remote_theme        : Nirbhay_Borikar/Robotics_Engineer
+open_new_tab        : false
+
+### Plugins ###
+plugins:
+  - jemoji
+
+### Navbar Settings ###
+nav_exclude:
+  - pages/tags.html
+  - pages/404.html
+  - pages/index.md
+
+### Author Info ###
+author:
+  name              : Nirbhay_Borikar
+  image             : /home/nirbhayborikar/Pictures/Photo.jpg   # <-- Local image path
+  behance           : nirbhayborikar
+  email             : nirbhayborikar@gmail.com
+  facebook          : nirbhayborikar
+  github            : nirbhayborikar
+  gitlab            : nb-246830
+  linkedin          : nirbhayborikar
+
+### Posts ###
+permalink: /blog/:title
+
+### Collections ###
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name
+
+### Disqus ###
+disqus:
+  shortname: ""   # Empty if not using Disqus
+
+### Analytics ###
+analytics:
+  enabled: false
+  google:
+    tracking_id: ""
+
+### Buy me a coffee ###
+buymeacoffee:
+  enabled: false
+  username: ""
+  color: "#007bff"
+  message: "Thank you for visiting."
+  description: "Support me on Buy me a coffee!"
+
+### Defaults for collections ###
+defaults:
+  - scope:
+      path: ""
+      type: "projects"
+    values:
+      layout: "page"
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      comments: false
+
+### Exclude from processing ###
+exclude:
+  - README.md
+  - CONTRIBUTING.md
+  - LICENSE
+  - "*.log"
+
