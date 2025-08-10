@@ -15,7 +15,7 @@ description: Developed algorithm to grasp object with manipulation planning in R
 
 This project is about generating a successful algorithm for TIAGO Robot arm using PyMoveIt2 to reach any object automatically once the camera detects position of the object with the help of tf transformation.
 
-![KUKA Robot](https://nirbhayborikar.github.io/assets/images/kuka/kuka_robot.jpg)
+![KUKA Robot](https://nirbhayborikar.github.io/assets/images/kuka/kuka.png)
 
 ## Key Features
 
