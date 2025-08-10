@@ -4,8 +4,8 @@ description         : >-
                       I turn coffee :coffee: into code,
                       use tabs over spaces
                       and never broke production.
-baseurl             : ""            # Leave empty for <username>.github.io
-repository          : nirbhayborikar/nirbhay_borikar.github.io
+baseurl             : ""            # Empty because repo is username.github.io
+repository          : nirbhayborikar/nirbhayborikar.github.io
 remote_theme        : Nirbhay_Borikar/Robotics_Engineer
 open_new_tab        : false
 
@@ -22,7 +22,7 @@ nav_exclude:
 ### Author Info ###
 author:
   name              : Nirbhay_Borikar
-  image             : /home/nirbhayborikar/Pictures/Photo.jpg   # <-- Local image path
+  image             : /assets/images/profile.jpg   # Local image in assets/images/
   behance           : nirbhayborikar
   email             : nirbhayborikar@gmail.com
   facebook          : nirbhayborikar
@@ -41,7 +41,7 @@ collections:
 
 ### Disqus ###
 disqus:
-  shortname: ""   # Empty if not using Disqus
+  shortname: ""
 
 ### Analytics ###
 analytics:
