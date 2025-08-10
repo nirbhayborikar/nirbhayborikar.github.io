@@ -8,8 +8,16 @@ description: Developed algorithm to grasp object with manipulation planning in R
 
 <br>
 <p class="text-center">
-{% include elements/button.html link="https://drive.google.com/file/d/13ziPAswNSWEmpfW1nK2dU9DGyQdSlSdv/preview" text="Working video" %}
+  <a class="btn btn-primary" href="#video-preview" onclick="document.getElementById('video-preview').style.display='block'; return false;">
+    Working video
+  </a>
 </p>
+
+<div id="video-preview" style="display:none; text-align:center; margin-top:20px;">
+  <iframe src="https://drive.google.com/file/d/13ziPAswNSWEmpfW1nK2dU9DGyQdSlSdv/preview"
+          width="640" height="360" style="border:none;">
+  </iframe>
+</div>
 
 ## Overview
 
