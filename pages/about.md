@@ -12,7 +12,7 @@ Hi I am **{{ site.author.name }}** :wave:
 <br>
 
 <br>
-<center><img src="{{ site.url }}{{ site.baseurl }}/assets/photo.jpeg" width=420/></center>
+<center><img src="{{ site.url }}{{ site.baseurl }}/assets/Nice_Photo.jpg" width=420/></center>
 <br>
 
 I am currently pursuing a Master of Science in Mechatronics at Hochschule Ravensburg-Weingarten, specializing in Robotics, Computer Vision, and Automation Engineering. My passion lies in developing robotic and intelligent systems that solve real-world challenges. My academic journey started with a solid foundation in mechanical engineering, which sparked my interest in computers and programming. This natural intersection of skills guided me toward robotics, where I can blend mechanical design with software development.
