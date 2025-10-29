@@ -1,5 +1,5 @@
 ---
-name: TIAGO Robot,Navigation and Arm Manipulation
+name: TIAGO Robot, Arm Controlling
 tools: [ROS2, PyMoveIt2, Linux]
 image: https://nirbhayborikar.github.io/assets/gifs/Tiago.gif
 description: Developed algorithm to grasp object with manipulation planning in ROS 2 using PyMoveIt2. Performed SLAM, TF-based localization, and target identification in Gazebo/Rviz; containerized workspace via Docker.TIAGO Robot from PAL Robotics used for testing medical assistant feature.
