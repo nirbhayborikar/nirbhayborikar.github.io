@@ -4,19 +4,19 @@ tools: [ROS2, Nav2, Linux, CV, Image_Template]
 image: https://nirbhayborikar.github.io/assets/gifs/track_following_Autonomous_Robot.gif
 description: Developed algorithm to navigate in the environment using ROS2, Nav2, Computer Vision. Performed SLAM of the environment, drive based on LIDAR data input. Used CV Bridge for tracking lane with camera via template matching in OpenCv, also used camera for tunnel sign detection and then navigating in tunnel. Small autobot called turtlebot is used for all the operation.
 ---
-# TIAGO Robot Arm motion planning
+# Autonomous Driving With Turtlebot, (LIDAR & Camera Based)
 
 <br>
 
-<p class="text-center">
+<!-- <p class="text-center">
 {% include elements/button.html link="https://drive.unnel.com/file/d/1mgIZ6jfwOep7Z3avsALZiHS2C05CURlU/preview" text="Working video" %}
-</p>
+</p> -->
 
 ## Overview
 
 
 
-![Turtlebot](https://nirbhayborikar.github.io/assets/images/tiago_demo_robo.png)
+![Turtlebot](https://nirbhayborikar.github.io/assets/images/Turtlebot_Arena.png)
 
 ## Key Features
 
@@ -32,7 +32,7 @@ description: Developed algorithm to navigate in the environment using ROS2, Nav2
    - Driving based on only camera input, such as track following (driving in between the track lines), OpenCv is used with ROS2 to detect the track lines color and then adjusting position of frame the robot should follow that is collecting by camera, and from the line some offset also given, and also it auto adjust when it get close to track lines.
 
    ![Turtlebot_Track_Following](https://nirbhayborikar.github.io/assets/gif/track_following_Autonomous_Robot.gif)
-   
+
    - Simultaneously detect tunnel sign based on ROS2 CV bridge module. It detect sign based on template matching algorithm written in OpenCV.
    - Once the tunnel sign detected, it drive safely inside the tunnel and navigate to othe pathways.
 
