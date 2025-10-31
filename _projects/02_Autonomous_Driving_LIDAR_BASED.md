@@ -27,7 +27,7 @@ description: Autonomous Driving based on LIDAR data and camera input using Turtl
    
    <p class="text-center">
      <video controls loop autoplay muted style="max-width: 100%; height: auto;">
-       <source src="https://nirbhayborikar.github.io/assets/gif/Autonomous_Robot_Turtlebot_wall_follow.gif" type="video/mp4">
+       <source src="https://nirbhayborikar.github.io/assets/turtlebot/wall.mp4" type="video/mp4">
        Your browser does not support the video tag.
      </video>
    </p>
@@ -36,7 +36,7 @@ description: Autonomous Driving based on LIDAR data and camera input using Turtl
 
    <p class="text-center">
      <video controls loop autoplay muted style="max-width: 100%; height: auto;">
-       <source src="https://nirbhayborikar.github.io/assets/gif/track_following_Autonomous_Robot.gif" type="video/mp4">
+       <source src="https://nirbhayborikar.github.io/assets/turtlebot/track.mp4" type="video/mp4">
        Your browser does not support the video tag.
      </video>
    </p>
