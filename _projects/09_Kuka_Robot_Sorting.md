@@ -1,81 +1,70 @@
 ---
-name: KUKA Robot Arm Ball Sorting
-tools: [KRL, Color Sorting]
+name: KUKA Robot Arm – Ball Sorting Automation
+tools: [KRL, Industrial Robotics, Simulation, Gripper Control, Sensor Integration]
 image: https://nirbhayborikar.github.io/assets/gifs/industrial_robot/Sorting.gif
-description: Developed algorithm to grasp object with manipulation planning in ROS 2 using PyMoveIt2. Performed SLAM, TF-based localization, and target identification in Gazebo/Rviz; containerized workspace via Docker.TIAGO Robot from PAL Robotics used for testing medical assistant feature.
+description: Developed a ball-sorting automation system using KUKA KR robot, gripper, and color-sensor in simulation and on industrial hardware using KRL.
 ---
-# Industrial KUKA Robot, controling
 
-<br>
-<p class="text-center">
-  <a class="btn btn-primary" href="#video-preview" onclick="document.getElementById('video-preview').style.display='block'; return false;">
-    Working video
-  </a>
-</p>
+# KUKA Industrial Robot – Ball Sorting Automation
 
-<div id="video-preview" style="display:none; text-align:center; margin-top:20px;">
-  <iframe src="https://drive.google.com/file/d/13ziPAswNSWEmpfW1nK2dU9DGyQdSlSdv/preview"
-          width="640" height="360" style="border:none;">
-  </iframe>
-</div>
-
-## Overview
-
-This project is about generating a successful algorithm for TIAGO Robot arm using PyMoveIt2 to reach any object automatically once the camera detects position of the object with the help of tf transformation.
+## Overview  
+As part of a Master's program in Robotics, I worked with industrial robots and developed an automated **ball-sorting system** using a **KUKA KR robotic arm**. The task involved simulation, **KRL programming**, and real robot execution with a gripper and color sensor.
 
 <p align="center">
-  <img src="https://nirbhayborikar.github.io/assets/images/kuka/kuka.png" alt="KUKA Robot" width="400">
+  <img src="https://nirbhayborikar.github.io/assets/images/kuka/kuka.png" width="600">
 </p>
 
+---
 
 ## Key Features
 
-1. **Comprehensive Robot Manipulation and Navigation:**
-   - Autonomous navigation in a simulated environment using ROS2 Navigation Stack and SLAM for mapping and localization.
-   - Robust AprilTag detection integrated with TF transformations to accurately locate objects and waypoints relative to the robot.
-   - Dynamic collision object handling to ensure safe motion planning and prevent collisions during manipulation tasks.
+### ✅ **Automated Pick-Sort-Place**
+- Robot picks balls from a feeding station  
+- Reads ball color using a color sensor  
+- Places the ball into corresponding pallet position  
+- Repeats until feeder is empty or pallet is full  
+- Returns safely to **HOME** position
 
-2. **Advanced Pick-and-Place Operation:**
-   - Utilizes the PyMoveIt2 framework to control TIAGO’s robotic arm for precise grasping and placing of objects.
-   - Real-time pose estimation from AprilTag detections guides arm movement, ensuring accurate object manipulation.
-   - Collision-aware motion planning to avoid obstacles, including virtual objects dynamically added to the environment.
+### ✅ **Simulation + Real Hardware**
+Simulation environment:
 
-3. **Integrated Simulation and Visualization Tools:**
-   - Full simulation environment built with Gazebo, featuring realistic objects, rooms, and obstacles.
-   - Rviz visualization of robot sensor data, AprilTags, TF frames, maps, and planned trajectories for comprehensive monitoring.
+<p align="center">
+  <img src="https://nirbhayborikar.github.io/assets/images/kuka/Simulation.jpeg" width="600">
+</p>
+<p align="center">
+  <img src="https://nirbhayborikar.github.io/assets/images/kuka/Simulation2.jpeg" width="600">
+</p>
 
-4. **Multi-threaded, Modular Software Architecture:**
-   - Uses ROS2 multithreading capabilities for concurrent processes such as motion planning, transformation listening, and navigation feedback.
-   - Python-based scripts for high-level control with PyMoveIt2, enabling rapid development and easy integration.
+### ✅ **Operation Flow**
 
-5. **Challenges and Solutions:**
-   - Addressed grasp precision and object slipping by fine-tuning gripper control parameters and contact modeling.
-   - Managed occasional motion planning failures by refining start states and improving collision modeling.
-   - Implemented pre-grasp approach strategies and waypoint navigation to minimize collisions and improve reliability.
+1. Move robot to **HOME**
+2. Move above feeder → open gripper
+3. **PTP** to pick position → **LIN** down → close gripper
+4. Move to color sensor → **LIN** down → read digital color signal
+5. Move to appropriate pallet position based on color
+6. Place ball → return to feeder for next ball
+7. Stop when feeder empty or pallet full → go **HOME**
 
-6. **Educational Project Context:**
-   - Part of an intelligent robotics course project, demonstrating integration of perception, planning, and control for autonomous manipulation.
-   - All task action videos and demonstrations are available [here](https://drive.google.com/drive/folders/1ePXDNSp5Fpw2DYeY8WG5IXis6DZvU1pJ/preview).
+### ✅ **Tools Used**
+- KUKA Teach Pendant (KCP/KUKA SmartPad): 
 
-## Technical Details
+<p align="center">
+  <img src="https://nirbhayborikar.github.io/assets/images/kuka/Controller.jpeg" width="600">
+</p>
 
-- **Development Environment:**
-  - Linux OS with Docker containerization for consistent, reproducible ROS2 workspace setup.
-  - Core middleware is ROS2, orchestrating control, navigation, and perception nodes within isolated containers.
+- KRL programming
+- Color sensor with digital I/O
+- Pneumatic / servo gripper
 
-- **Simulation and Visualization:**
-  - Gazebo for 3D environment simulation, including robot movement, sensor emulation, and collision object insertion.
-  - Rviz for real-time visualization of robot states, sensor data, TF frames, maps, AprilTags, and planned paths.
+### ✅ **Speed**
+Robot tested at 40–100% operating speed depending on workspace clearance.
 
-- **Perception and Localization:**
-  - SLAM for building and localizing within an unknown map using sensor data.
-  - AprilTag detection combined with TF2 for precise coordinate transformations and pose extraction.
+---
 
-- **Robot Manipulation:**
-  - PyMoveIt2 framework used for high-level arm motion planning and execution with collision awareness.
-  - Python scripts handle motion commands, TF data processing, collision object management, and gripper control.
+## 🧠 **Challenges & Solutions**
+- Color detection timing --> Added delay + signal valid check.
+- Precise pallet placement --> Wrote custom pallet indexing function.
+- Safe motion --> Used PTP for long moves, LIN for pick/drop accuracy.
 
-- **Multithreading and Concurrency:**
-  - ROS2 MultiThreadedExecutor enables simultaneous execution of callbacks—such as listening for transformations while executing motion plans.
-  - This design improves responsiveness and real-time performance in complex robotic tasks.
+---
 
