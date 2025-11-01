@@ -31,6 +31,8 @@ Simulation environment:
 <p align="center">
   <img src="https://nirbhayborikar.github.io/assets/images/kuka/Simulation.jpeg" width="600">
 </p>
+
+Top View:
 <p align="center">
   <img src="https://nirbhayborikar.github.io/assets/images/kuka/Simulation2.jpeg" width="600">
 </p>
@@ -58,6 +60,26 @@ Simulation environment:
 
 ### ✅ **Speed**
 Robot tested at 40–100% operating speed depending on workspace clearance.
+Full Operation Video:
+
+Sorting Ball -
+
+<p class="text-center">
+  <video controls loop autoplay muted style="max-width: 80%; height: auto;">
+    <source src="https://nirbhayborikar.github.io/assets/gifs/industrial_robot/Sorting_Ball_Front.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</p>
+
+Tool Teaching (It's a basic task given to get familiar with Robots) -
+
+<p class="text-center">
+  <video controls loop autoplay muted style="max-width: 80%; height: auto;">
+    <source src="https://nirbhayborikar.github.io/assets/gifs/industrial_robot/Tool_teaching.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</p>
+
 
 ---
 
