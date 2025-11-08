@@ -1,71 +1,88 @@
 ---
-name: TIAGO Robot, Arm Controlling
-tools: [ROS2, PyMoveIt2, Linux]
-image: https://nirbhayborikar.github.io/assets/gifs/Tiago.gif
-description: Developed algorithm to grasp object with manipulation planning in ROS 2 using PyMoveIt2. Performed SLAM, TF-based localization, and target identification in Gazebo/Rviz; containerized workspace via Docker.TIAGO Robot from PAL Robotics used for testing medical assistant feature.
+name: Car_Detection_With_YOLO
+tools: [OpenCV, YOLO, Python]
+image: https://nirbhayborikar.github.io/assets/images/car/GT_YOLO_DIST.png
+description: |
+  Car detection and depth estimation using YOLO 11m on the KITTI dataset.
 ---
-# TIAGO Robot Arm motion planning
-
-<br>
-
-<p class="text-center">
-{% include elements/button.html link="https://drive.google.com/file/d/1mgIZ6jfwOep7Z3avsALZiHS2C05CURlU/preview" text="Working video" %}
-</p>
+# Car Detection With YOLO (Camera-Based, KITTI Dataset)
 
 ## Overview
+A pretrained deep neural network, **YOLO 11m (You Only Look Once)**, was employed to detect cars and estimate the depth from the camera to the detected cars.  
+This report outlines the methodologies adopted, key findings and observations, challenges encountered, outcomes achieved, and the future scope of the project. 
 
-This project is about generating a successful algorithm for TIAGO Robot arm using PyMoveIt2 to reach any object automatically once the camera detects position of the object with the help of tf transformation.
+![Car Detection](https://nirbhayborikar.github.io/assets/images/car/GT_YOLO_DIST.png)
 
-![TIAGO Robot](https://nirbhayborikar.github.io/assets/images/tiago_demo_robo.png)
+---
 
 ## Key Features
 
-1. **Comprehensive Robot Manipulation and Navigation:**
-   - Autonomous navigation in a simulated environment using ROS2 Navigation Stack and SLAM for mapping and localization.
-   - Robust AprilTag detection integrated with TF transformations to accurately locate objects and waypoints relative to the robot.
-   - Dynamic collision object handling to ensure safe motion planning and prevent collisions during manipulation tasks.
+1. **Comprehensive Car Detection and Depth Estimation**
+   - Using a deep neural network model, cars from the environment are detected. The detector performance is evaluated using **Intersection over Union (IoU)**, **Precision**, **Recall**, and **Average Precision (AP)**.  
+   - Furthermore, using a **pinhole camera model** and **nearest corner method**, the depth of the car from the camera is calculated.
 
-2. **Advanced Pick-and-Place Operation:**
-   - Utilizes the PyMoveIt2 framework to control TIAGO’s robotic arm for precise grasping and placing of objects.
-   - Real-time pose estimation from AprilTag detections guides arm movement, ensuring accurate object manipulation.
-   - Collision-aware motion planning to avoid obstacles, including virtual objects dynamically added to the environment.
+2. **Algorithm**
+   ![Algorithm](https://nirbhayborikar.github.io/assets/images/car/Algorithm.png)
 
-3. **Integrated Simulation and Visualization Tools:**
-   - Full simulation environment built with Gazebo, featuring realistic objects, rooms, and obstacles.
-   - Rviz visualization of robot sensor data, AprilTags, TF frames, maps, and planned trajectories for comprehensive monitoring.
+3. **The KITTI Dataset**
+   - The KITTI dataset used in this project is a subset comprising 20 stereo images, corresponding ground truth values, including coordinates, and the intrinsic matrices for depth estimation.
+   - The labels file in the dataset contains the object type, its ground truth coordinates (x1, y1, x2, y2), and the distance from the camera to the car.
+   - Since the original KITTI dataset does not provide fixed distances for the objects, these distances were calculated as ground truth values.  
+     The four corners (c1, c2, c3, c4) and four midpoints (m1, m2, m3, m4) were used, selecting the minimum of these eight values as the ground truth distance.
 
-4. **Multi-threaded, Modular Software Architecture:**
-   - Uses ROS2 multithreading capabilities for concurrent processes such as motion planning, transformation listening, and navigation feedback.
-   - Python-based scripts for high-level control with PyMoveIt2, enabling rapid development and easy integration.
+     ![Corner Method](https://nirbhayborikar.github.io/assets/images/car/Center_Method_Ground_Dist.png)
 
-5. **Challenges and Solutions:**
-   - Addressed grasp precision and object slipping by fine-tuning gripper control parameters and contact modeling.
-   - Managed occasional motion planning failures by refining start states and improving collision modeling.
-   - Implemented pre-grasp approach strategies and waypoint navigation to minimize collisions and improve reliability.
+   - The KITTI Dataset also shows how the camera is mounted on top of the vehicle:
+     ![Camera Position](https://nirbhayborikar.github.io/assets/images/car/camera_positioned.png)
 
-6. **Educational Project Context:**
-   - Part of an intelligent robotics course project, demonstrating integration of perception, planning, and control for autonomous manipulation.
-   - All task action videos and demonstrations are available [here](https://drive.google.com/file/d/1mgIZ6jfwOep7Z3avsALZiHS2C05CURlU/preview).
+4. **Choosing the YOLO 11m Model**
+   - The YOLOv11 model is the latest iteration in the YOLO series, offering significant improvements in accuracy, speed, and efficiency for computer vision tasks.
+   - The YOLOv11m variant was specifically chosen for this project because it provides an optimal balance between processing time and mean average precision (mAP).
 
-## Technical Details
+5. **Detecting Cars and Drawing Bounding Boxes**
+   - Using the YOLO 11m model, the function detects the object "car" and retrieves its coordinates (x1, y1, x2, y2), storing them in a list.
+   - These coordinates are used to draw bounding boxes around detected cars, along with their confidence values.
+   - The confidence values are subsequently used to calculate Precision and Recall metrics.
 
-- **Development Environment:**
-  - Linux OS with Docker containerization for consistent, reproducible ROS2 workspace setup.
-  - Core middleware is ROS2, orchestrating control, navigation, and perception nodes within isolated containers.
+     ![Car Detection](https://nirbhayborikar.github.io/assets/images/car/Detecting_the_cars_and_drawing_Bounding_boxes.png)
 
-- **Simulation and Visualization:**
-  - Gazebo for 3D environment simulation, including robot movement, sensor emulation, and collision object insertion.
-  - Rviz for real-time visualization of robot states, sensor data, TF frames, maps, AprilTags, and planned paths.
+6. **Evaluation of the Object Detection Algorithm**
+   - Ground truth data was loaded, and corresponding green boxes were drawn using polylines.
+   - To improve accuracy, detected bounding boxes without corresponding ground truth boxes were removed using the **Intersection over Union (IoU)** metric.
 
-- **Perception and Localization:**
-  - SLAM for building and localizing within an unknown map using sensor data.
-  - AprilTag detection combined with TF2 for precise coordinate transformations and pose extraction.
+     The first image shows cars detected only by YOLO:  
+     ![No Filtering](https://nirbhayborikar.github.io/assets/images/car/Red_only_yolo.png)
 
-- **Robot Manipulation:**
-  - PyMoveIt2 framework used for high-level arm motion planning and execution with collision awareness.
-  - Python scripts handle motion commands, TF data processing, collision object management, and gripper control.
+     The next image shows filtered detections after ground truth matching:  
+     ![Filtering](https://nirbhayborikar.github.io/assets/images/car/green_red_overall.png)
 
-- **Multithreading and Concurrency:**
-  - ROS2 MultiThreadedExecutor enables simultaneous execution of callbacks—such as listening for transformations while executing motion plans.
-  - This design improves responsiveness and real-time performance in complex robotic tasks.
+7. **Precision and Recall**
+   - IoU values for each bounding box were compared against a threshold (λ = 0.75) to ensure high-quality detections.
 
+     - If IoU ≥ λ → **True Positive (TP)**  
+     - If IoU < λ → **False Positive (FP)**  
+
+   - Bounding boxes were sorted in descending order based on confidence values. Precision and Recall were then computed:
+
+     ![Precision and Recall](https://nirbhayborikar.github.io/assets/images/car/Precision_And_Recall.png)
+
+     Output plots:
+     ![Precision_And_Recall_AP1](https://nirbhayborikar.github.io/assets/images/car/AP_1.png)  
+     ![Precision_And_Recall_AP2](https://nirbhayborikar.github.io/assets/images/car/AP_2.png)
+
+8. **Depth Estimation**
+   - Depth estimation uses **similar triangles** and the camera's **intrinsic parameters** (especially focal length `f_y`) along with the **camera height**.  
+   - By measuring the vertical position of the car’s base in the image (relative to the principal point), a geometrical ratio determines the car’s distance from the camera.
+
+     ![Depth Estimation 1](https://nirbhayborikar.github.io/assets/images/car/GT_YOLO.png)  
+     ![Depth Estimation 2](https://nirbhayborikar.github.io/assets/images/car/GT_YOLO_DIST.png)
+
+9. **Results**
+   - A plot was created with **YOLO Depth (m)** on the x-axis and **Ground Truth Depth (m)** on the y-axis.  
+   - The results show YOLO’s depth estimation is accurate for objects within ~40 meters, but less reliable beyond 40–70 meters due to camera limitations.
+
+     ![Graph](https://nirbhayborikar.github.io/assets/images/car/graph.png)
+
+10. **Repository**
+   - All code snippets, output images, and documentation related to the KITTI Dataset are available here:  
+     [GitHub Repository](https://github.com/nirbhayborikar/-Car_detection_and_depth_estimation-_opencv_and_yolo11m)
