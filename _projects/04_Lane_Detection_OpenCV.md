@@ -138,12 +138,13 @@ The final polished output:
 
 ---
 
-This is the version used in **real-time driving systems**.
+This is the version used in **real-time driving systems**. The video below is showing real-time lane finding and driving in an environment: 
 
 <p align="center">
   <img src="https://nirbhayborikar.github.io/assets/gifs/lane_video/output_lane_detection.gif" alt="Lane Detection Output" style="max-width: 90%;">
 </p>
 ---
 
-# 📁 Repository
-  - The code and output images can be clone from this repo: https://github.com/nirbhayborikar/finding_lanes_Autonomous_Driving_OpenCV/tree/main
+# 4. **Repository**
+   - All code snippets, output images, and documentation related to the lane_detection are available here:  
+     [GitHub Repository](https://github.com/nirbhayborikar/finding_lanes_Autonomous_Driving_OpenCV/tree/main)
