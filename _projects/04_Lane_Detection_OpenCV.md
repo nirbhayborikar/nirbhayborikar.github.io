@@ -15,7 +15,7 @@ This project implements a **real-time lane detection system** using **OpenCV**, 
 The pipeline combines **feature extraction**, **Hough line detection**, and **lane-line optimization** to produce clean, stable lane boundaries from dashcam footage.
 
 <p align="center">
-  <img src="https://nirbhayborikar.github.io/assets/gifs/lane_video/output_video.png" alt="Lane Detection Output" style="max-width: 90%;">
+  <img src="https://nirbhayborikar.github.io/assets/images/lane_detection/output_video.png" alt="Lane Detection Output" style="max-width: 90%;">
 </p>
 
 ---
@@ -35,7 +35,7 @@ It captures high-contrast edges such as:
 This step extracts the essential geometry needed for lane detection.
 
 <p align="center">
-  <img src="https://nirbhayborikar.github.io/assets/gifs/images/lane_detection/Canny_image_with_plot.png" alt="Canny_Image" style="max-width: 90%;">
+  <img src="https://nirbhayborikar.github.io/assets/images/lane_detection/Canny_image_with_plot.png" alt="Canny_Image" style="max-width: 90%;">
 </p>
 
 ---
@@ -53,7 +53,7 @@ It removes:
 This focuses computation on the **drivable triangle** where lane lines exist.
 
 <p align="center">
-  <img src="https://nirbhayborikar.github.io/assets/gifs/images/lane_detection/mask_image.png" alt="Mask_Image" style="max-width: 90%;">
+  <img src="https://nirbhayborikar.github.io/assets/images/lane_detection/mask_image.png" alt="Mask_Image" style="max-width: 90%;">
 </p>
 
 ---
@@ -63,7 +63,7 @@ A bitwise AND operation. This leaves **only road-relevant edges**, dramatically 
 Only the edges *inside the driving region* survive.
 
 <p align="center">
-  <img src="https://nirbhayborikar.github.io/assets/gifs/images/lane_detection/isolated_image_bitwise.png" alt="Isolated Edges" style="max-width: 90%;">
+  <img src="https://nirbhayborikar.github.io/assets/images/lane_detection/isolated_image_bitwise.png" alt="Isolated Edges" style="max-width: 90%;">
 </p>
 
 ---
@@ -81,7 +81,7 @@ This output shows the raw result of **Probabilistic Hough Transform**:
 This is typical because lane markings are dashed and can vary in brightness.
 
 <p align="center">
-  <img src="https://nirbhayborikar.github.io/assets/gifs/images/lane_detection/marking_lines.png" alt="Initial Line Segments" style="max-width: 90%;">
+  <img src="https://nirbhayborikar.github.io/assets/images/lane_detection/marking_lines.png" alt="Initial Line Segments" style="max-width: 90%;">
 </p>
 
 ---
@@ -94,12 +94,13 @@ All detected segments are:
 - Extrapolated to span the full lane length  
 
 <p align="center">
-  <img src="https://nirbhayborikar.github.io/assets/gifs/images/lane_detection/optimize.png" alt="Lane Line Optimization" style="max-width: 90%;">
+  <img src="https://nirbhayborikar.github.io/assets/images/lane_detection/optimize.png" alt="Lane Line Optimization" style="max-width: 90%;">
 </p>
 
 ---
 
-The result:  ➡ Two smooth, continuous **master lane lines** . This creates a robust signal for navigation and steering logic.
+The result:  ➡ Two smooth, continuous **master lane lines** .  
+This creates a robust signal for navigation and steering logic.
 
 ---
 
@@ -107,7 +108,7 @@ The result:  ➡ Two smooth, continuous **master lane lines** . This creates a r
 
 This step overlays the results back onto the original video and produces final, visually clean lane boundaries.
 
-### **🔹 Raw Lines on Original Frame – `line_on_real_image_detected.jpg`**  
+### **🔹 Raw Lines on Original Frame – `line_on_real_image_detected.png`**  
 All small Hough segments are drawn onto the real frame.  
 It is technically correct but:
 
@@ -118,11 +119,12 @@ It is technically correct but:
 This view is great for debugging but not ideal for lane-keeping.
 
 <p align="center">
-  <img src="https://nirbhayborikar.github.io/assets/gifs/images/lane_detection/line_on_real_image_detected.png" alt="Raw Lines on Original Frame" style="max-width: 90%;">
+  <img src="https://nirbhayborikar.github.io/assets/images/lane_detection/line_on_real_image_detected.png" alt="Raw Lines on Original Frame" style="max-width: 90%;">
 </p>
 
 ---
-### **🔹 Final Optimized Lane Output – `optimize_in_main_image.jpg`**  
+
+### **🔹 Final Optimized Lane Output – `optimize_in_main_image.png`**  
 The final polished output:
 
 - Two stable, averaged lane lines  
@@ -131,7 +133,7 @@ The final polished output:
 - Supports steering, navigation, and decision-making  
 
 <p align="center">
-  <img src="https://nirbhayborikar.github.io/assets/gifs/images/lane_detection/optimize_in_main_image.png" alt="Final Optimized Lane Output" style="max-width: 90%;">
+  <img src="https://nirbhayborikar.github.io/assets/images/lane_detection/optimize_in_main_image.png" alt="Final Optimized Lane Output" style="max-width: 90%;">
 </p>
 
 ---
@@ -148,4 +150,3 @@ This is the version used in **real-time driving systems**.
 ---
 
 # 📁 Project Structure
-
