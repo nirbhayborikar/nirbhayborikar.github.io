@@ -1,71 +1,151 @@
 ---
-name: TIAGO Robot, Arm Controlling
-tools: [ROS2, PyMoveIt2, Linux]
-image: https://nirbhayborikar.github.io/assets/gifs/Tiago.gif
-description: Developed algorithm to grasp object with manipulation planning in ROS 2 using PyMoveIt2. Performed SLAM, TF-based localization, and target identification in Gazebo/Rviz; containerized workspace via Docker.TIAGO Robot from PAL Robotics used for testing medical assistant feature.
+name: Lane Detection, Autonomous Driving OpenCV
+tools: [OpenCV, Python]
+image: https://nirbhayborikar.github.io/assets/gifs/lane_video/output_lane_detection.gif
+description: Real-time lane detection system for autonomous driving using classical computer vision techniques.
 ---
-# TIAGO Robot Arm motion planning
+
+# 🚗 Lane Detection – Autonomous Driving (OpenCV)
 
 <br>
 
-<p class="text-center">
-{% include elements/button.html link="https://drive.google.com/file/d/1mgIZ6jfwOep7Z3avsALZiHS2C05CURlU/preview" text="Working video" %}
+## 📌 Overview
+
+This project implements a **real-time lane detection system** using **OpenCV**, designed for autonomous driving applications.  
+The pipeline combines **feature extraction**, **Hough line detection**, and **lane-line optimization** to produce clean, stable lane boundaries from dashcam footage.
+
+<p align="center">
+  <img src="https://nirbhayborikar.github.io/assets/gifs/lane_video/output_video.png" alt="Lane Detection Output" style="max-width: 90%;">
 </p>
 
-## Overview
+---
 
-This project is about generating a successful algorithm for TIAGO Robot arm using PyMoveIt2 to reach any object automatically once the camera detects position of the object with the help of tf transformation.
+# 🧠 1. Pre-Processing & Feature Extraction
 
-![TIAGO Robot](https://nirbhayborikar.github.io/assets/images/tiago_demo_robo.png)
+This stage prepares the raw video frame for reliable lane detection by reducing noise, extracting edges, and isolating the road region.
 
-## Key Features
+### **🔹 Canny Edge Detection – `Canny_image_with_plot.png`**  
+This image shows how the Canny algorithm converts the color frame into a **binary gradient map**, highlighting strong intensity changes.  
+It captures high-contrast edges such as:
 
-1. **Comprehensive Robot Manipulation and Navigation:**
-   - Autonomous navigation in a simulated environment using ROS2 Navigation Stack and SLAM for mapping and localization.
-   - Robust AprilTag detection integrated with TF transformations to accurately locate objects and waypoints relative to the robot.
-   - Dynamic collision object handling to ensure safe motion planning and prevent collisions during manipulation tasks.
+- Lane markings  
+- Road boundaries  
+- Horizon & mountains  
 
-2. **Advanced Pick-and-Place Operation:**
-   - Utilizes the PyMoveIt2 framework to control TIAGO’s robotic arm for precise grasping and placing of objects.
-   - Real-time pose estimation from AprilTag detections guides arm movement, ensuring accurate object manipulation.
-   - Collision-aware motion planning to avoid obstacles, including virtual objects dynamically added to the environment.
+This step extracts the essential geometry needed for lane detection.
 
-3. **Integrated Simulation and Visualization Tools:**
-   - Full simulation environment built with Gazebo, featuring realistic objects, rooms, and obstacles.
-   - Rviz visualization of robot sensor data, AprilTags, TF frames, maps, and planned trajectories for comprehensive monitoring.
+<p align="center">
+  <img src="https://nirbhayborikar.github.io/assets/gifs/images/lane_detection/Canny_image_with_plot.png" alt="Canny_Image" style="max-width: 90%;">
+</p>
 
-4. **Multi-threaded, Modular Software Architecture:**
-   - Uses ROS2 multithreading capabilities for concurrent processes such as motion planning, transformation listening, and navigation feedback.
-   - Python-based scripts for high-level control with PyMoveIt2, enabling rapid development and easy integration.
+---
 
-5. **Challenges and Solutions:**
-   - Addressed grasp precision and object slipping by fine-tuning gripper control parameters and contact modeling.
-   - Managed occasional motion planning failures by refining start states and improving collision modeling.
-   - Implemented pre-grasp approach strategies and waypoint navigation to minimize collisions and improve reliability.
+### **🔹 Region of Interest Mask – `mask_image.png`**  
+A polygonal ROI is applied to keep only the area directly in front of the vehicle.  
+It removes:
 
-6. **Educational Project Context:**
-   - Part of an intelligent robotics course project, demonstrating integration of perception, planning, and control for autonomous manipulation.
-   - All task action videos and demonstrations are available [here](https://drive.google.com/file/d/1mgIZ6jfwOep7Z3avsALZiHS2C05CURlU/preview).
+- Sky  
+- Trees  
+- Mountains  
+- Vehicles  
+- Side scenery  
 
-## Technical Details
+This focuses computation on the **drivable triangle** where lane lines exist.
 
-- **Development Environment:**
-  - Linux OS with Docker containerization for consistent, reproducible ROS2 workspace setup.
-  - Core middleware is ROS2, orchestrating control, navigation, and perception nodes within isolated containers.
+<p align="center">
+  <img src="https://nirbhayborikar.github.io/assets/gifs/images/lane_detection/mask_image.png" alt="Mask_Image" style="max-width: 90%;">
+</p>
 
-- **Simulation and Visualization:**
-  - Gazebo for 3D environment simulation, including robot movement, sensor emulation, and collision object insertion.
-  - Rviz for real-time visualization of robot states, sensor data, TF frames, maps, AprilTags, and planned paths.
+---
 
-- **Perception and Localization:**
-  - SLAM for building and localizing within an unknown map using sensor data.
-  - AprilTag detection combined with TF2 for precise coordinate transformations and pose extraction.
+### **🔹 Isolated Edges – `isolated_image_bitwise.png`**  
+A bitwise AND operation. This leaves **only road-relevant edges**, dramatically reducing noise.  
+Only the edges *inside the driving region* survive.
 
-- **Robot Manipulation:**
-  - PyMoveIt2 framework used for high-level arm motion planning and execution with collision awareness.
-  - Python scripts handle motion commands, TF data processing, collision object management, and gripper control.
+<p align="center">
+  <img src="https://nirbhayborikar.github.io/assets/gifs/images/lane_detection/isolated_image_bitwise.png" alt="Isolated Edges" style="max-width: 90%;">
+</p>
 
-- **Multithreading and Concurrency:**
-  - ROS2 MultiThreadedExecutor enables simultaneous execution of callbacks—such as listening for transformations while executing motion plans.
-  - This design improves responsiveness and real-time performance in complex robotic tasks.
+---
+
+# 📐 2. Line Detection & Optimization
+
+After isolating the road edges, the next step is to detect line segments using the Hough Line Transform and convert them into clean lane markers.
+
+### **🔹 Initial Line Segments – `marking_lines.png`**  
+This output shows the raw result of **Probabilistic Hough Transform**:  
+- Many short, broken line segments  
+- Follow the lane markings  
+- Accurate but fragmented  
+
+This is typical because lane markings are dashed and can vary in brightness.
+
+<p align="center">
+  <img src="https://nirbhayborikar.github.io/assets/gifs/images/lane_detection/marking_lines.png" alt="Initial Line Segments" style="max-width: 90%;">
+</p>
+
+---
+
+### **🔹 Lane Line Optimization – `optimize.png`**  
+All detected segments are:
+
+- Grouped by slope (left lane = negative, right lane = positive)  
+- Averaged using linear regression  
+- Extrapolated to span the full lane length  
+
+<p align="center">
+  <img src="https://nirbhayborikar.github.io/assets/gifs/images/lane_detection/optimize.png" alt="Lane Line Optimization" style="max-width: 90%;">
+</p>
+
+---
+
+The result:  ➡ Two smooth, continuous **master lane lines** . This creates a robust signal for navigation and steering logic.
+
+---
+
+# 🎯 3. Final Integration
+
+This step overlays the results back onto the original video and produces final, visually clean lane boundaries.
+
+### **🔹 Raw Lines on Original Frame – `line_on_real_image_detected.jpg`**  
+All small Hough segments are drawn onto the real frame.  
+It is technically correct but:
+
+- Fragmented  
+- Visually noisy  
+- Sensitive to dashed lines  
+
+This view is great for debugging but not ideal for lane-keeping.
+
+<p align="center">
+  <img src="https://nirbhayborikar.github.io/assets/gifs/images/lane_detection/line_on_real_image_detected.png" alt="Raw Lines on Original Frame" style="max-width: 90%;">
+</p>
+
+---
+### **🔹 Final Optimized Lane Output – `optimize_in_main_image.jpg`**  
+The final polished output:
+
+- Two stable, averaged lane lines  
+- Clean and consistent  
+- Easy for an autonomous system to interpret  
+- Supports steering, navigation, and decision-making  
+
+<p align="center">
+  <img src="https://nirbhayborikar.github.io/assets/gifs/images/lane_detection/optimize_in_main_image.png" alt="Final Optimized Lane Output" style="max-width: 90%;">
+</p>
+
+---
+
+This is the version used in **real-time driving systems**.
+
+<p align="center">
+  <video controls loop autoplay muted style="max-width: 80%; height: auto;">
+    <source src="https://nirbhayborikar.github.io/assets/gifs/lane_video/output_lane_detection.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</p>
+
+---
+
+# 📁 Project Structure
 
