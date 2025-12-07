@@ -140,15 +140,10 @@ The final polished output:
 
 This is the version used in **real-time driving systems**.
 
-
-<p class="text-center">
-  <video controls loop autoplay muted style="max-width: 80%; height: auto;">
-    <source src="https://nirbhayborikar.github.io/assets/gifs/lane_video/output_lane_detection.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+<p align="center">
+  <img src="https://nirbhayborikar.github.io/assets/gifs/lane_video/output_lane_detection.gif" alt="Lane Detection Output" style="max-width: 90%;">
 </p>
-
-
 ---
 
-# 📁 Project Structure
+# 📁 Repository
+  - The code and output images can be clone from this repo: https://github.com/nirbhayborikar/finding_lanes_Autonomous_Driving_OpenCV/tree/main
