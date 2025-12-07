@@ -15,7 +15,7 @@ This project implements a **real-time lane detection system** using **OpenCV**, 
 The pipeline combines **feature extraction**, **Hough line detection**, and **lane-line optimization** to produce clean, stable lane boundaries from dashcam footage.
 
 <p align="center">
-  <img src="https://nirbhayborikar.github.io/assets/images/lane_detection/output_video.png" alt="Lane Detection Output" style="max-width: 90%;">
+  <img src="https://nirbhayborikar.github.io/assets/gifs/lane_video/output_video.png" alt="Lane Detection Output" style="max-width: 90%;">
 </p>
 
 ---
@@ -140,12 +140,14 @@ The final polished output:
 
 This is the version used in **real-time driving systems**.
 
-<p align="center">
+
+<p class="text-center">
   <video controls loop autoplay muted style="max-width: 80%; height: auto;">
     <source src="https://nirbhayborikar.github.io/assets/gifs/lane_video/output_lane_detection.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 </p>
+
 
 ---
 
